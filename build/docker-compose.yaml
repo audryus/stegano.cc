@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: build/Dockerfile
+    container_name: stegano
+    ports:
+      - "3000:3000"
+    environment:
+      # Example environment variables (adjust as needed)
+      - CONF_DIR=./config

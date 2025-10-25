@@ -63,7 +63,7 @@ func main() {
 }
 
 func CreateServer(cfg config.Config) *fiber.App {
-	engine := django.NewFileSystem(http.Dir("./"), ".html")
+	engine := django.NewFileSystem(http.Dir("."), ".html")
 
 	app := fiber.New(fiber.Config{
 		ReadTimeout:  time.Second * 5,
