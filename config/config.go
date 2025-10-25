@@ -37,7 +37,7 @@ type (
 )
 
 func New() Config {
-	dir := os.Getenv("DPOINT_CONF_DIR")
+	dir := os.Getenv("CONF_DIR")
 
 	if len(dir) == 0 {
 		_, file, _, _ := runtime.Caller(0)

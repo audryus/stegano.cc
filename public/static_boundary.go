@@ -13,6 +13,7 @@ func Handle(app *fiber.App) {
 		CacheDuration: time.Hour,
 	}
 
+	app.Static("/robots.txt", "./public/robots.txt", static)
 	app.Static("/public/favicon", "./public/favicon", static)
 	app.Static("/public/css", "./public/css", static)
 	app.Static("/public/fonts", "./public/fonts", static)
