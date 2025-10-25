@@ -4,7 +4,7 @@ server:
 
 app:
   name: 'Stegano.cc'
-  version: '1.0.2'
+  version: '1.0.3'
   env: 'local'
 
 logger:
