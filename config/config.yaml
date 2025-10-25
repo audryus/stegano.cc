@@ -1,0 +1,14 @@
+server:
+  header: 'Stegano.cc'
+  addr: 'http://localhost:3000'
+
+app:
+  name: 'Stegano.cc'
+  version: '1.0.0'
+  env: 'local'
+
+logger:
+  level: 'info'
+
+http:
+  addr: '0.0.0.0:3000'

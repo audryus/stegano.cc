@@ -1,0 +1,26 @@
+{% extends "template/glass.html" %}
+{% block model %}
+<form hx-post="/encrypt" hx-target="body">
+    <div class="space-y-5">
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Password</legend>
+            <input type="password" id="password" name="password" class="input validator input-bordered"
+                placeholder="••••••••" />
+        </fieldset>
+
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Secret Phrase</legend>
+            <textarea class="textarea textarea-bordered h-28 w-full validator" id="phrase" name="phrase"
+                placeholder="Type your secret message..."></textarea>
+        </fieldset>
+
+        <button class="btn btn-primary w-full mt-4">Encrypt</button>
+    </div>
+</form>
+
+{% if encrypted %}
+<div role="alert" class="alert break-all mt-6 alert-success">
+    <span> {{ encrypted }}</span>
+</div>
+{% endif %}
+{% endblock %}

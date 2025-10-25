@@ -1,0 +1,56 @@
+{% extends "template/glass.html" %}
+
+
+{% block model %}
+<form enctype="multipart/form-data" method="post" action="/decrypt" x-data x-ref="form"
+    @submit="setTimeout(() => $refs.form.reset(), 100)">
+    <div class="space-y-5">
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Password</legend>
+            <input type="password" id="password" name="password" class="input validator input-bordered" required
+                placeholder="••••••••" />
+        </fieldset>
+
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Secret Phrase</legend>
+            <textarea class="textarea textarea-bordered h-28 w-full" id="message" name="message"
+                placeholder="Type your secret message..."></textarea>
+        </fieldset>
+
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Image, with encrypted secret</legend>
+            <input id="file" name="file" type="file" accept="image/png" class="file-input validator" x-ref="fileInput"
+                @change="
+            fileName = $event.target.files[0]?.name || ''
+        " />
+        </fieldset>
+
+        <button class="btn btn-primary w-full mt-4">Decrypt</button>
+
+        <div class="mt-8">
+            <h3 class="font-semibold mb-2">Decrypted Result</h3>
+            <div
+                class="rounded-xl border border-base-300 bg-base-200/60 p-6 flex flex-col items-center justify-center h-48">
+                {% if decryptedMessage or decryptedFile %}
+                {% if decryptedFile %}
+                <span class="opacity-60 text-sm break-all">
+                    {{ decryptedFile }}<br /><br /><br /><br />
+                </span>
+                {% endif %}
+                {% if decryptedMessage %}
+                <span class="opacity-60 text-sm break-all">
+                    {{ decryptedMessage }}
+                </span>
+
+                {% endif %}
+                {% else %}
+                <span class="opacity-60 text-sm break-all">
+                    Decrypted message will appear here.
+                </span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "template/glass.html" %}
+{% block model %}
+<form enctype="multipart/form-data" method="post" action="/embed" x-data x-ref="form"
+    @submit="setTimeout(() => $refs.form.reset(), 100)">
+    <div class="space-y-5">
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Secret Phrase</legend>
+            <textarea class="textarea textarea-bordered h-28 w-full validator" id="phrase" name="phrase" required
+                placeholder="Type your secret message..."></textarea>
+        </fieldset>
+
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Image, Max size <p class="label font-bold text-base-content">2MB</p>
+            </legend>
+            <input id="file" name="file" type="file" accept="image/jpeg, image/png" class="file-input validator"
+                required x-ref="fileInput" @change="
+            fileName = $event.target.files[0]?.name || ''
+        " />
+            <p class="label">PNG recommended</p>
+        </fieldset>
+
+
+        <button class="btn btn-primary w-full mt-4">Embed</button>
+    </div>
+</form>
+
+{% endblock %}

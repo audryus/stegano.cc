@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/public/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="description"
+        content="Stegano.cc — Hide and reveal encrypted BIP39 24-word Bitcoin wallet phrases in images using steganography. Secure, private, and easy encryption & decryption.">
+    <meta name="keywords"
+        content="steganography, image encryption, image decryption, BIP39, bitcoin, bitcoin wallet, wallet, 24 words, mnemonic, crypto security, hide message, reveal message, Stegano.cc, privacy, secure communication">
+    <meta name="author" content="Stegano.cc Team">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Stegano.cc — Steganography perfect for BIP39 Encryption">
+    <meta property="og:description"
+        content="Encrypt and decrypt messages hidden in images using steganography perfect to hide your BIP39 24-word phrases. Secure your secrets with Stegano.cc.">
+    <meta property="og:image" content="/public/images/share-preview.png">
+    <meta property="og:url" content="https://stegano.cc">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Stegano.cc — Steganography for BIP39 Bitcoin wallet">
+    <meta name="twitter:description" content="Hide and reveal encrypted BIP39 24-word Bitcoin wallet phrases.">
+    <title>Stegano.cc — Encrypt & Decrypt your BIP39 Bitcoin wallet phrases</title>
+
+    <link href="/public/css/daisyui.css" rel="stylesheet" type="text/css" />
+    <script src="/public/js/tailwind.js"></script>
+    <link href="/public/css/themes.css" rel="stylesheet" type="text/css" />
+
+    <script defer src="/public/js/alpine.js"></script>
+    <script src="/public/js/htmx.js"></script>
+
+    <style>
+        .fade-enter-active.htmx-swapping {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: inline-block;
+            position: relative;
+            border: 3px solid;
+            border-color: #FFF #FFF transparent transparent;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        .loader::after,
+        .loader::before {
+            content: '';
+            box-sizing: border-box;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            border: 3px solid;
+            border-color: transparent transparent #FF3D00 #FF3D00;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            box-sizing: border-box;
+            animation: rotationBack 0.5s linear infinite;
+            transform-origin: center center;
+        }
+
+        .loader::before {
+            width: 32px;
+            height: 32px;
+            border-color: #FFF #FFF transparent transparent;
+            animation: rotation 1.5s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes rotationBack {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(-360deg);
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="fade-enter-active min-h-screen flex items-center justify-center bg-base-200 text-base-content p-6 overflow-hidden">
+    {% block content %}{% endblock %}
+</body>
+
+</html>

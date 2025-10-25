@@ -1,0 +1,52 @@
+{% extends "template/base.html" %}
+
+{% block content %}
+<div class="glass rounded-2xl shadow-2xl border border-base-300 w-full max-w-3xl p-6 transition-all duration-300"
+    x-data="{ fileName: '', loadingDecrypt: false, loadingEmbed: false, loadingEncrypt: false }">
+    <header class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-3">
+        <div class="min-w-0">
+            <h1
+                class="text-3xl text-base-content font-extrabold tracking-tight bg-gradient-to-r from-primary to-secondary bg-clip-text truncate">
+                Stegano.cc
+            </h1>
+            <p class="text-primary-content/70 text-sm">Encrypt & Decrypt</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="join">
+            <button class="join-item btn btn-lg btn-secondary min-w-[8.1rem] {% if encrypt %} btn-disabled {% endif %}"
+                hx-get="encrypt" hx-push-url="true" hx-target="body" :disabled="loadingEncrypt"
+                hx-trigger="click delay:0.1s" hx-swap="outerHTML swap:0.3s" @click="loadingEncrypt = true; ">
+                <span x-cloak x-show="!loadingEncrypt">Encrypt</span>
+                <span x-cloak x-show="loadingEncrypt" class="loader" aria-hidden="true"></span>
+            </button>
+            <button class="join-item btn btn-lg btn-secondary min-w-[8.1rem] {% if embed %} btn-disabled {% endif %}"
+                hx-get="embed" hx-push-url="true" hx-target="body" :disabled="loadingEmbed"
+                hx-trigger="click delay:0.1s" hx-swap="outerHTML swap:0.3s" @click="loadingEmbed = true; ">
+                <span x-cloak x-show="!loadingEmbed">Embed</span>
+                <span x-cloak x-show="loadingEmbed" class="loader" aria-hidden="true"></span>
+
+            </button>
+            <button
+                class="join-item btn btn-lg btn-secondary min-w-[8.1rem] {% if decrypt %} btn-disabled {% endif %}"" hx-get="
+                decrypt" hx-push-url="true" hx-target="body" :disabled="loadingDecrypt" hx-trigger="click delay:0.1s"
+                hx-swap="outerHTML swap:0.3s" @click="loadingDecrypt = true; ">
+                <span x-cloak x-show="!loadingDecrypt">Decrypt</span>
+                <span x-cloak x-show="loadingDecrypt" class="loader" aria-hidden="true"></span>
+            </button>
+        </div>
+
+    </header>
+    {% block model %}{% endblock %}
+</div>
+{% if Errors %}
+<div class="toast toast-end">
+    {% for e in Errors %}
+    <div class="alert alert-error" x-transition.opacity.duration.500ms x-data="{show: true}" x-show="show"
+        x-init="setTimeout(() => show = false, (({{ e.Index }} * 500) + 2000))">
+        <span>{{ e.Msg }}</span>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
