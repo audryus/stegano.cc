@@ -1,3 +1,5 @@
+FROM golang:1.25 AS builder
+
 FROM scratch
 COPY --from=builder /app/bin/app /app
 COPY . .
