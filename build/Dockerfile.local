@@ -1,0 +1,22 @@
+# Step 1: Modules caching
+FROM golang:1.25 AS modules
+COPY go.mod go.sum /modules/
+WORKDIR /modules
+RUN go mod download
+
+# Step 2: Builder
+FROM golang:1.25 AS builder
+COPY --from=modules /go/pkg /go/pkg
+COPY . /app
+WORKDIR /app
+RUN go build -ldflags="-w -s" -o bin/app
+
+FROM golang:1.25
+WORKDIR /app
+COPY . .
+COPY --from=builder /app/bin/app ./bin/app
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+#RUN pwd
+#RUN ls -R . && exit 1
+EXPOSE 3000
+ENTRYPOINT ["/app/bin/app"]

@@ -17,51 +17,69 @@ import (
 // Decrypt reads an image from file, extracts the embedded encrypted payload,
 // derives AES key from password+salt and returns decrypted plaintext.
 func Decrypt(password, message string, file io.Reader) (string, string, error) {
-	var messageDecrypted []byte
-	var fileDecrypted []byte
-	var err error
-
-	if file != nil {
-		img, err := decodeImage(file)
-		if err != nil {
-			return "", "", err
-		}
-		fileDecrypted, err = extractEmbeddedPayload(img)
-		if err != nil {
-			return "", "", err
-		}
-		fileDecrypted, err = base64.StdEncoding.DecodeString(string(fileDecrypted))
-		if err != nil {
-			return "", "", err
-		}
-		salt := fileDecrypted[len(fileDecrypted)-16:]
-		derivedKey, err := key.DeriveAESFromPassword(password, salt)
-		if err != nil {
-			return "", "", fmt.Errorf("derive AES Key From Password: %v", err)
-		}
-		fileDecrypted, err = decryptMessage(fileDecrypted, derivedKey)
-		if err != nil {
-			return "", "", fmt.Errorf("decryption failed: %v", err)
-		}
+	// var err error
+	fileDecrypted, err := decryptFile(password, file)
+	if err != nil {
+		return "", "", err
 	}
+
+	messageDecrypted, err := decryptText(password, message)
+	if err != nil {
+		return "", "", err
+	}
+
+	return messageDecrypted, fileDecrypted, nil
+}
+
+func decryptText(password, message string) (string, error) {
+	var messageDecrypted []byte
+	var err error
 
 	if len(message) > 0 {
 		messageDecrypted, err = base64.StdEncoding.DecodeString(message)
 		if err != nil {
-			return "", "", err
+			return "", err
 		}
 		salt := messageDecrypted[len(messageDecrypted)-16:]
 		derivedKey, err := key.DeriveAESFromPassword(password, salt)
 		if err != nil {
-			return "", "", fmt.Errorf("derive AES Key From Password: %v", err)
+			return "", fmt.Errorf("derive AES Key From Password: %v", err)
 		}
 		messageDecrypted, err = decryptMessage(messageDecrypted, derivedKey)
 		if err != nil {
-			return "", "", fmt.Errorf("decryption failed: %v", err)
+			return "", fmt.Errorf("decryption failed: %v", err)
 		}
 	}
+	return string(messageDecrypted), nil
+}
 
-	return string(messageDecrypted), string(fileDecrypted), nil
+func decryptFile(password string, file io.Reader) (string, error) {
+	var fileDecrypted []byte
+
+	if file != nil {
+		img, err := decodeImage(file)
+		if err != nil {
+			return "", err
+		}
+		fileDecrypted, err = extractEmbeddedPayload(img)
+		if err != nil {
+			return "", err
+		}
+		fileDecrypted, err = base64.StdEncoding.DecodeString(string(fileDecrypted))
+		if err != nil {
+			return "", err
+		}
+		salt := fileDecrypted[len(fileDecrypted)-16:]
+		derivedKey, err := key.DeriveAESFromPassword(password, salt)
+		if err != nil {
+			return "", fmt.Errorf("derive AES Key From Password: %v", err)
+		}
+		fileDecrypted, err = decryptMessage(fileDecrypted, derivedKey)
+		if err != nil {
+			return "", fmt.Errorf("decryption failed: %v", err)
+		}
+	}
+	return string(fileDecrypted), nil
 }
 
 func decodeImage(file io.Reader) (image.Image, error) {

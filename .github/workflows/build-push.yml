@@ -3,6 +3,10 @@ name: Docker Image CI
 on:
   push:
     branches: [ "trunk" ]
+    paths-ignore:
+      - 'README.md'
+      - 'build/Dockerfile.local'
+      - 'build/docker-compose.yaml'
 
 jobs:
 

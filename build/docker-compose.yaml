@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: ../
-      dockerfile: build/Dockerfile
+      dockerfile: build/Dockerfile.local
     container_name: stegano
     ports:
       - "3000:3000"
