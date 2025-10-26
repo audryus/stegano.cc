@@ -4,8 +4,9 @@ server:
 
 app:
   name: 'Stegano.cc'
-  version: '1.0.5'
+  version: '1.0.6'
   env: 'local'
+  rateLimit: '20'
 
 logger:
   level: 'info'

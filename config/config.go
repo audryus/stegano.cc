@@ -23,8 +23,9 @@ type (
 	}
 
 	App struct {
-		Name    string `yaml:"name"`
-		Version string `yaml:"version"`
+		Name      string `yaml:"name"`
+		Version   string `yaml:"version"`
+		RateLimit string `yaml:"rateLimit"  env:"RATE_LIMIT"`
 	}
 
 	Http struct {

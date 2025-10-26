@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/audryus/steganocc/config"
@@ -49,9 +50,13 @@ func Fiber(app *fiber.App, cfg config.Config, logger *logger.Log) {
 		AllowMethods:     "GET, POST, OPTIONS",
 		AllowOrigins:     cfg.Server.Addr,
 	}))
+	ratelimit, err := strconv.Atoi(cfg.App.RateLimit)
+	if err != nil {
+		logger.Error("Rate limit not valid.", err)
+	}
 
 	app.Use(limiter.New(limiter.Config{
-		Max:        120,
+		Max:        ratelimit,
 		Expiration: 60 * time.Second,
 		KeyGenerator: func(c *fiber.Ctx) string {
 			if xf := c.Get("X-Forwarded-For"); xf != "" {

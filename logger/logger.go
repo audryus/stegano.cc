@@ -53,27 +53,27 @@ func (l *Log) Engine() *zerolog.Logger {
 }
 
 func (l *Log) Info(message string, args ...interface{}) {
-	l.log(zerolog.InfoLevel, message, args...)
+	l.log(zerolog.InfoLevel, message, nil, args...)
 }
 
 func (l *Log) Debug(message string, args ...interface{}) {
-	l.log(zerolog.DebugLevel, message, args...)
+	l.log(zerolog.DebugLevel, message, nil, args...)
 }
 
 func (l *Log) Warn(message string, args ...interface{}) {
-	l.log(zerolog.WarnLevel, message, args...)
+	l.log(zerolog.WarnLevel, message, nil, args...)
 }
 
-func (l *Log) Error(message string, args ...interface{}) {
-	l.log(zerolog.ErrorLevel, message, args...)
+func (l *Log) Error(message string, err error, args ...interface{}) {
+	l.log(zerolog.ErrorLevel, message, err, args...)
 }
 
-func (l *Log) log(level zerolog.Level, message string, args ...interface{}) {
+func (l *Log) log(level zerolog.Level, message string, err error, args ...interface{}) {
 	var event *zerolog.Event
 
 	switch level {
 	case zerolog.ErrorLevel:
-		event = l.logger.Error()
+		event = l.logger.Error().Err(err)
 	case zerolog.DebugLevel:
 		event = l.logger.Debug()
 	case zerolog.WarnLevel:
