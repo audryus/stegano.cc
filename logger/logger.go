@@ -12,7 +12,7 @@ type iLog interface {
 	Debug(msg string, keyvals ...interface{})
 	Info(msg string, keyvals ...interface{})
 	Warn(msg string, keyvals ...interface{})
-	Error(msg string, keyvals ...interface{})
+	Error(msg string, err error, keyvals ...interface{})
 }
 
 type Log struct {
