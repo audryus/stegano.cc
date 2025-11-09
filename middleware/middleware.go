@@ -37,7 +37,7 @@ func Fiber(app *fiber.App, cfg config.Config, logger *logger.Log) {
 		c.Response().Header.Set("X-Frame-Options", "DENY")
 		c.Response().Header.Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
 
-		c.Response().Header.Set("Content-Security-Policy", "default-src 'self'; img-src * 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'")
+		c.Response().Header.Set("Content-Security-Policy", "default-src 'self'; img-src * 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval' 'unsafe-inline'")
 		c.Response().Header.Set("Referrer-Policy", "strict-origin-when-cross-origin")
 		c.Response().Header.Set("Permissions-Policy", "geolocation=(self), microphone=()")
 		c.Response().Header.Set("X-XSS-Protection", "1; mode=block")
