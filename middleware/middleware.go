@@ -55,23 +55,25 @@ func Fiber(app *fiber.App, cfg config.Config, logger *logger.Log) {
 		logger.Error("Rate limit not valid.", err)
 	}
 
-	app.Use(limiter.New(limiter.Config{
-		Max:        ratelimit,
-		Expiration: 60 * time.Second,
-		KeyGenerator: func(c *fiber.Ctx) string {
-			if xf := c.Get("X-Forwarded-For"); xf != "" {
-				return xf
-			}
-			return c.IP()
-		},
-		LimitReached: func(c *fiber.Ctx) error {
-			c.Set("Retry-After", "60")
-			return c.SendStatus(fiber.StatusTooManyRequests)
-		},
-		SkipFailedRequests:     true,
-		SkipSuccessfulRequests: false,
-		LimiterMiddleware:      limiter.SlidingWindow{},
+	if cfg.App.Env != "local" {
+		app.Use(limiter.New(limiter.Config{
+			Max:        ratelimit,
+			Expiration: 60 * time.Second,
+			KeyGenerator: func(c *fiber.Ctx) string {
+				if xf := c.Get("X-Forwarded-For"); xf != "" {
+					return xf
+				}
+				return c.IP()
+			},
+			LimitReached: func(c *fiber.Ctx) error {
+				c.Set("Retry-After", "60")
+				return c.SendStatus(fiber.StatusTooManyRequests)
+			},
+			SkipFailedRequests:     true,
+			SkipSuccessfulRequests: false,
+			LimiterMiddleware:      limiter.SlidingWindow{},
 
-		Storage: bbolt.New(),
-	}))
+			Storage: bbolt.New(),
+		}))
+	}
 }

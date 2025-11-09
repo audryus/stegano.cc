@@ -37,6 +37,15 @@
     <script src="/public/js/htmx.js"></script>
 
     <style>
+        [x-cloak] {
+            display: none !important;
+        }
+
+        /* Hide all loaders until Alpine turns them on */
+        .loader {
+            display: none;
+        }
+
         .fade-enter-active.htmx-swapping {
             opacity: 0;
             transform: translateY(10px);

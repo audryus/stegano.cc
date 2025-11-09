@@ -24,6 +24,7 @@ type (
 
 	App struct {
 		Name      string `yaml:"name"`
+		Env       string `yaml:"env"`
 		Version   string `yaml:"version"`
 		RateLimit string `yaml:"rateLimit"  env:"RATE_LIMIT"`
 	}
