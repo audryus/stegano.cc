@@ -4,7 +4,7 @@ go 1.25.3
 
 require (
 	github.com/gofiber/contrib/fiberzerolog v1.0.3
-	github.com/gofiber/fiber/v2 v2.52.9
+	github.com/gofiber/fiber/v2 v2.52.12
 	github.com/gofiber/storage/bbolt/v2 v2.1.1
 	github.com/gofiber/template/django/v3 v3.1.14
 	github.com/ilyakaznacheev/cleanenv v1.5.0
@@ -28,11 +28,9 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.19 // indirect
 	github.com/philhofer/fwd v1.2.0 // indirect
-	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/tinylib/msgp v1.5.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.68.0 // indirect
-	github.com/valyala/tcplisten v1.0.0 // indirect
 	go.etcd.io/bbolt v1.4.3 // indirect
 	go.uber.org/dig v1.19.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
